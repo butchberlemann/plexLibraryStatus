@@ -8,17 +8,26 @@ root = ET.fromstring(content)
 child = root.find("Video")
 csvOutput = open('./testfile.csv','w')
 
+movieLibList = []
+
 csvOutput.write("Title, Rotten Tomato Rating, IMDB, Metascore, File loc \r")
 
+
 for child in root:
+    movie = []
     title = child.attrib.get('title')
     media = child.find("Media").find("Part")
+    rottonTomato = ""
+    imdbRating = ""
+    metascore = ""
     
     csvOutput.write(title.replace(',','') + ",")
     audienceRatingImage = child.attrib.get('audienceRatingImage')
 
     if audienceRatingImage != None:
-        csvOutput.write(audienceRatingImage.replace("rottentomatoes://image.rating.", "") + "," )
+        rottonTomato = audienceRatingImage.replace("rottentomatoes://image.rating.", "") + ","
+        csvOutput.write(rottonTomato )
+        
     else:
         csvOutput.write("No Rating Found , ")
     #Open Movie DB
